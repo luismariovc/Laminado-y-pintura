@@ -87,12 +87,29 @@ class MainActivity : AppCompatActivity() {
         loadSavedLogo()
         setupListeners()
         setupServicesGrid()
-        updateHeaderData()
-
         // Estado inicial
         addHojalateriaRow()
         addPinturaRow()
         addRepuestoRow()
+    }
+
+    // Real-time Clock Logic
+    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val timeRunnable = object : Runnable {
+        override fun run() {
+            updateHeaderData()
+            handler.postDelayed(this, 1000) // Update every second
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.post(timeRunnable) // Start updates
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(timeRunnable) // Stop updates to save battery
     }
 
     private fun initViews() {
