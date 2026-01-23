@@ -289,7 +289,89 @@ class MainActivity : AppCompatActivity() {
 
         btnGenerar.setOnClickListener {
             if (validarFormulario()) {
+                checkPermissionAndGenerate()
+            }
+        }
+    }
+
+    private fun checkPermissionAndGenerate() {
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_CONTACTS) 
+            != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            
+            androidx.core.app.ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.WRITE_CONTACTS, android.Manifest.permission.READ_CONTACTS),
+                1001
+            )
+        } else {
+            saveContactAndGenerate()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1001) {
+            // Even if denied, we proceed to generate (user just won't have the contact saved)
+            // But we should try to save if granted.
+            if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                saveContactAndGenerate()
+            } else {
+                Toast.makeText(this, "Permiso denegado. El cliente no se guardará automáticamente.", Toast.LENGTH_SHORT).show()
                 generarCotizacion()
+            }
+        }
+    }
+
+    private fun saveContactAndGenerate() {
+        val name = etClienteNombre.text.toString()
+        val phone = etClienteTelefono.text.toString().filter { it.isDigit() }
+        
+        if (name.isNotEmpty() && phone.isNotEmpty()) {
+            saveContactIfNew(name, phone)
+        }
+        generarCotizacion()
+    }
+
+    private fun saveContactIfNew(name: String, phone: String) {
+        // Simple check if number exists
+        val uri = android.net.Uri.withAppendedPath(android.provider.ContactsContract.PhoneLookup.CONTENT_FILTER_URI, android.net.Uri.encode(phone))
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        
+        val exists = if (cursor != null && cursor.moveToFirst()) {
+            cursor.close()
+            true
+        } else {
+            cursor?.close()
+            false
+        }
+
+        if (!exists) {
+            try {
+                val ops = ArrayList<android.content.ContentProviderOperation>()
+                
+                ops.add(android.content.ContentProviderOperation.newInsert(android.provider.ContactsContract.RawContacts.CONTENT_URI)
+                    .withValue(android.provider.ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                    .withValue(android.provider.ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                    .build())
+
+                ops.add(android.content.ContentProviderOperation.newInsert(android.provider.ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(android.provider.ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(android.provider.ContactsContract.Data.MIMETYPE, android.provider.ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                    .withValue(android.provider.ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
+                    .build())
+
+                ops.add(android.content.ContentProviderOperation.newInsert(android.provider.ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(android.provider.ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(android.provider.ContactsContract.Data.MIMETYPE, android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(android.provider.ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                    .withValue(android.provider.ContactsContract.CommonDataKinds.Phone.TYPE, android.provider.ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                    .build())
+
+                contentResolver.applyBatch(android.provider.ContactsContract.AUTHORITY, ops)
+                Toast.makeText(this, "Cliente guardado en contactos", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Error al guardar contacto: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -377,6 +459,7 @@ class MainActivity : AppCompatActivity() {
         // Ir a pantalla de cotización
         val intent = Intent(this, CotizacionActivity::class.java)
         intent.putExtra("COTIZACION_DATA", cotizacion)
+        intent.putExtra("AUTO_SEND_WHATSAPP", true) // Auto-trigger flow
         startActivity(intent)
     }
 

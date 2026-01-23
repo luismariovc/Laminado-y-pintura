@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import java.io.Serializable
 
 class CotizacionActivity : AppCompatActivity() {
 
@@ -51,6 +52,11 @@ class CotizacionActivity : AppCompatActivity() {
         loadCotizacion()
         displayCotizacion()
         setupListeners()
+        
+        // Auto-Send Logic
+        if (intent.getBooleanExtra("AUTO_SEND_WHATSAPP", false)) {
+            enviarPorWhatsApp(cotizacion)
+        }
     }
 
     private fun initViews() {
@@ -144,51 +150,44 @@ class CotizacionActivity : AppCompatActivity() {
     // ============================================
 
     private fun enviarPorWhatsApp(cotizacion: Cotizacion) {
-        val mensaje = """
-            *COTIZACIÓN - FOLIO: ${cotizacion.folio}*
-            _Premium Laminado y Pintura_
-            
-            *CLIENTE:* ${cotizacion.cliente.nombre}
-            *VEHÍCULO:* ${cotizacion.vehiculo.marca} ${cotizacion.vehiculo.modelo}
-            *PLACAS:* ${cotizacion.vehiculo.placas}
-            
-            *SERVICIOS SOLICITADOS:*
-            ${cotizacion.servicios.joinToString("\n") { "• $it" }}
-            
-            *DETALLE DE COSTOS:*
-            
-            ${if (cotizacion.hojalateria.isNotEmpty()) "*1. HOJALATERÍA* - $${String.format("%.2f", cotizacion.totalHojalateria)}" else ""}
-            ${cotizacion.hojalateria.joinToString("\n") { "  • ${it.descripcion}: $${String.format("%.2f", it.precio)}" }}
-            
-            ${if (cotizacion.pintura.isNotEmpty()) "\n*2. PINTURA* - $${String.format("%.2f", cotizacion.totalPintura)}" else ""}
-            ${cotizacion.pintura.joinToString("\n") { "  • ${it.pieza} (${it.cantidad} ${it.unidad}): $${String.format("%.2f", it.precio)}" }}
-            
-            ${if (cotizacion.repuestos.isNotEmpty()) "\n*3. REPUESTOS* - $${String.format("%.2f", cotizacion.totalRepuestos)}" else ""}
-            ${cotizacion.repuestos.joinToString("\n") { "  • ${it.descripcion}: $${String.format("%.2f", it.precio)}" }}
-            
-            ━━━━━━━━━━━━━━━━
-            *TOTAL:* $${String.format("%.2f", cotizacion.totalGeneral)}
-            *ANTICIPO:* -$${String.format("%.2f", cotizacion.anticipo)}
-            *SALDO PENDIENTE:* $${String.format("%.2f", cotizacion.saldoPendiente)}
-            ━━━━━━━━━━━━━━━━
-            
-            ⏱️ *Tiempo estimado:* ${cotizacion.tiempoEstimado}
-            📍 *Piezas a intervenir:* ${cotizacion.piezasIntervenir}
-            
-            _Premium Laminado y Pintura_
-            📞 55 1234 5678
-        """.trimIndent()
+        val pdfGenerator = PdfGenerator(this)
+        val file = pdfGenerator.generatePdf(cotizacion)
 
-        try {
-            val telefono = cotizacion.cliente.telefono.replace(Regex("[^0-9]"), "")
-            val url = "https://wa.me/$telefono?text=${Uri.encode(mensaje)}"
+        if (file != null && file.exists()) {
+            try {
+                val uri = androidx.core.content.FileProvider.getUriForFile(
+                    this,
+                    "${applicationContext.packageName}.fileprovider",
+                    file
+                )
 
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error al abrir WhatsApp: ${e.message}",
-                Toast.LENGTH_SHORT).show()
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "application/pdf"
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                intent.setPackage("com.whatsapp") // Target WhatsApp directly
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                
+                // Attempt to target specific number
+                val rawPhone = cotizacion.cliente.telefono.filter { it.isDigit() }
+                if (rawPhone.isNotEmpty()) {
+                    // Mexico Fix
+                    val jidPhone = if (rawPhone.length == 10) "521$rawPhone" else rawPhone
+                    val jid = "$jidPhone@s.whatsapp.net"
+                    intent.putExtra("jid", jid)
+                }
+                
+                Toast.makeText(this, "Selecciona el contacto para enviar el PDF", Toast.LENGTH_LONG).show()
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Determine if error is because WhatsApp is not installed
+                if (e.message?.contains("No Activity found") == true) {
+                    Toast.makeText(this, "WhatsApp no está instalado", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al compartir PDF: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Toast.makeText(this, "Error al generar el PDF", Toast.LENGTH_SHORT).show()
         }
     }
 
