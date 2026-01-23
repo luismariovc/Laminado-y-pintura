@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E3A8A"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Documento de Cotización -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    android:background="@android:drawable/divider_horizontal_bright">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PREMIUM LAMINADO Y PINTURA"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cotización y Presupuesto"
+                            android:textSize="12sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/tvFolio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FOLIO: 003"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#EF4444"
+                            android:padding="4dp"
+                            android:background="#FEE2E2"/>
+
+                        <TextView
+                            android:id="@+id/tvFecha"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12/01/2026 08:59 PM"
+                            android:textSize="10sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Cliente y Vehículo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- Cliente -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:background="#F9FAFB"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CLIENTE"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#EF4444"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+                            android:id="@+id/tvClienteNombre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Carlos Eduardo Ramírez"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"
+                            android:layout_marginBottom="4dp"/>
+
+                        <TextView
+                            android:id="@+id/tvClienteTelefono"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tel: 3396582558"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/tvClienteEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email: c.ramirez@gmail.com"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/tvClienteDomicilio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Calle Volcán Popocatépetl No. 515"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"/>
+                    </LinearLayout>
+
+                    <!-- Vehículo -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:background="#F9FAFB">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VEHÍCULO"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#EF4444"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+                            android:id="@+id/tvVehiculoInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nissan Versa 2021"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"
+                            android:layout_marginBottom="4dp"/>
+
+                        <TextView
+                            android:id="@+id/tvVehiculoPlacas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Placas: JKL-4729"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/tvVehiculoColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Color: Gris Oxford"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"
+                            android:layout_marginBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/tvCodigoPintura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cód: 3N1C1WWA9985UY6"
+                            android:textSize="11sp"
+                            android:textColor="#6B7280"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Servicios y Tiempo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="#F3F4F6"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvTiempoEstimado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⏱️ Tiempo: 2-3 Días Hábiles"
+                        android:textSize="12sp"
+                        android:textColor="#1F2937"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:id="@+id/tvPiezas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📍 Piezas: 3"
+                        android:textSize="12sp"
+                        android:textColor="#1F2937"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SERVICIOS SOLICITADOS:"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#6B7280"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:id="@+id/tvServicios"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Golpe / Colisión, Repintado, Restauración Faros"
+                        android:textSize="11sp"
+                        android:textColor="#1F2937"/>
+                </LinearLayout>
+
+                <!-- Totales por Sección -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="#1F2937">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="1. HOJALATERÍA"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tvTotalHojalateria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$4900.00"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="#374151"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="2. PINTURA"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tvTotalPintura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$6600.00"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="#1F2937"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="3. REPUESTOS"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tvTotalRepuestos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$1110.00"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Resumen Final -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="#F9FAFB">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="(-) Anticipo:"
+                            android:textSize="14sp"
+                            android:textColor="#6B7280"/>
+
+                        <TextView
+                            android:id="@+id/tvAnticipo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$5000.00"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TOTAL:"
+                            android:textSize="14sp"
+                            android:textColor="#6B7280"/>
+
+                        <TextView
+                            android:id="@+id/tvTotalGeneral"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$12,610.00"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"/>
+                    </LinearLayout>
+
+                    <!-- Saldo Pendiente -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:background="#EF4444">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="SALDO RESTANTE:"
+                            android:textSize="14sp"
+                            android:textColor="#FFFFFF"/>
+
+                        <TextView
+                            android:id="@+id/tvSaldoPendiente"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$7,610.00"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Botones de Acción -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWhatsApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📱 Enviar por WhatsApp"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:backgroundTint="#25D366"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                app:cornerRadius="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✉️ Enviar por Correo"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:backgroundTint="#EF4444"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                app:cornerRadius="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnImprimir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🖨️ Imprimir / PDF"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:backgroundTint="#3B82F6"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                app:cornerRadius="8dp"/>
+
+            <Button
+                android:id="@+id/btnVolver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="← Volver al Formulario"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:backgroundTint="#6B7280"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
