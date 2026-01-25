@@ -29,9 +29,9 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="31">
 
-        <!-- MainActivity - Pantalla Principal -->
+        <!-- SplashActivity - Pantalla de Inicio -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -39,6 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MainActivity - Pantalla Principal -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <!-- CotizacionActivity - Vista de Cotización -->
         <activity
