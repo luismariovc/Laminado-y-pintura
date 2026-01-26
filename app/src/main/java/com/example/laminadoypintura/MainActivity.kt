@@ -231,17 +231,7 @@ class MainActivity : AppCompatActivity() {
                 // Actualizar UI
                 val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
                 val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
-                val lblSubirLogo = findViewById<android.view.View>(R.id.lblSubirLogo)
-
-                if (imgLogoPreview != null) {
-                    imgLogoPreview.imageTintList = null // Clear the red tint from XML
-                    imgLogoPreview.clearColorFilter() // Clear manual filter set by delete action
-                    imgLogoPreview.setImageBitmap(scaledBitmap)
-                    imgLogoPreview.setPadding(0,0,0,0) // Remove padding to use full space
-                }
-                
                 btnRemoveLogo?.visibility = android.view.View.VISIBLE
-                lblSubirLogo?.visibility = android.view.View.INVISIBLE // Hide text when image is present
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -275,16 +265,7 @@ class MainActivity : AppCompatActivity() {
              base64Logo = null
              val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
              val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
-             val lblSubirLogo = findViewById<android.view.View>(R.id.lblSubirLogo)
-
-             // Reset UI
-             imgLogoPreview.setImageResource(R.drawable.ic_image_upload)
-             imgLogoPreview.setColorFilter(getColor(R.color.premium_red))
-             val paddingDp = (8 * resources.displayMetrics.density).toInt()
-             imgLogoPreview.setPadding(paddingDp, paddingDp, paddingDp, paddingDp)
-             
              btnRemoveLogo.visibility = android.view.View.GONE
-             lblSubirLogo.visibility = android.view.View.VISIBLE
         }
 
         btnGenerar.setOnClickListener {
@@ -626,17 +607,7 @@ class MainActivity : AppCompatActivity() {
                 
                 val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
                 val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
-                val lblSubirLogo = findViewById<android.view.View>(R.id.lblSubirLogo)
-
-                if (imgLogoPreview != null) {
-                    imgLogoPreview.imageTintList = null
-                    imgLogoPreview.clearColorFilter()
-                    imgLogoPreview.setImageBitmap(bitmap)
-                    imgLogoPreview.setPadding(0, 0, 0, 0)
-                }
-                
                 btnRemoveLogo?.visibility = android.view.View.VISIBLE
-                lblSubirLogo?.visibility = android.view.View.INVISIBLE
             } catch (e: Exception) {
                 e.printStackTrace()
             }

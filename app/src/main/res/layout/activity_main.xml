@@ -17,26 +17,27 @@
             android:id="@+id/headerBg"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/premium_black"
+            android:background="@color/black"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/ivHeaderIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_launcher_foreground"
-            app:tint="@color/premium_red"
-            android:layout_marginStart="16dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo_paint"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/headerBg"
             app:layout_constraintBottom_toBottomOf="@id/headerBg"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintStart_toEndOf="@id/ivHeaderIcon"
+            app:layout_constraintEnd_toStartOf="@+id/headerRightContainer"
             app:layout_constraintTop_toTopOf="@id/ivHeaderIcon"
             app:layout_constraintBottom_toBottomOf="@id/ivHeaderIcon">
 
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="LAMINADO Y PINTURA"
                 android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold|italic"
                 android:fontFamily="sans-serif-black"/>
 
@@ -55,13 +56,14 @@
                 android:layout_height="wrap_content"
                 android:text="COTIZACIÓN Y PRESUPUESTO"
                 android:textColor="@color/premium_red"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:letterSpacing="0.1"
                 android:textStyle="bold"/>
         </LinearLayout>
 
         <!-- RIGHT SIDE: FOLIO AND DATE -->
         <LinearLayout
+            android:id="@+id/headerRightContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -123,15 +125,7 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvHeaderDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="LUNES, 12 DE ENERO DE 2026"
-            android:textColor="@color/text_grey"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="@id/tvHeaderTime"
-            app:layout_constraintTop_toBottomOf="@id/tvHeaderTime"/>
+
 
         <!-- PERFIL DEL TALLER CARD -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -215,14 +209,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnSubirLogo"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
                 app:layout_constraintStart_toEndOf="@id/guidelineOld"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lblTallerNombre"
-                app:layout_constraintBottom_toBottomOf="@id/etTallerDireccion">
+
+                app:layout_constraintTop_toBottomOf="@id/dividerProfile">
 
                 <ImageView
                     android:id="@+id/imgLogoPreview"
@@ -234,8 +228,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/lblSubirLogo"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnRemoveLogo"
@@ -250,19 +243,7 @@
                     android:layout_marginTop="-4dp"
                     android:layout_marginEnd="-4dp"/>
 
-                <TextView
-                    android:id="@+id/lblSubirLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SUBIR LOGO"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_grey"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imgLogoPreview"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,8 +298,9 @@
                 android:textSize="13sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toEndOf="@id/etTallerEncargado"
-                app:layout_constraintEnd_toStartOf="@id/guidelineOld"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/barrierMid"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblTallerTel"/>
 
             <!-- Middle Barrier (Visual approx 37% of width for first col) -->
@@ -327,7 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.37" />
+                app:layout_constraintGuide_percent="0.5" />
 
 
             <!-- ROW 3: Email / Direccion -->
@@ -380,8 +362,9 @@
                 android:textSize="13sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toEndOf="@id/etTallerEmail"
-                app:layout_constraintEnd_toStartOf="@id/guidelineOld"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/barrierMid"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblTallerDir"/>
 
 
