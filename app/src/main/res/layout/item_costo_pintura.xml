@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -7,43 +8,26 @@
     android:paddingVertical="4dp">
 
     <EditText
-        android:id="@+id/etPieza"
+        android:id="@+id/etDescripcion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:background="@drawable/bg_rounded_input"
-        android:padding="12dp"
-        android:hint="Pieza"
-        android:textSize="14sp"
+        android:padding="8dp"
+        android:hint="Descripción"
+        android:textSize="12sp"
         android:layout_marginEnd="4dp"/>
 
     <EditText
         android:id="@+id/etCantidad"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_input"
-        android:padding="12dp"
-        android:hint="1"
-        android:inputType="number"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginEnd="4dp"/>
-
-    <EditText
-        android:id="@+id/etUnidad"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_input"
-        android:padding="12dp"
-        android:hint="Unit"
-        android:textSize="14sp"
-        android:layout_marginEnd="4dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$"
-        android:textColor="@color/text_grey"
+        android:padding="8dp"
+        android:hint="1"
+        android:inputType="number"
+        android:gravity="center"
+        android:textSize="12sp"
         android:layout_marginEnd="4dp"/>
 
     <EditText
@@ -51,20 +35,31 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_input"
-        android:padding="12dp"
-        android:hint="0.00"
+        android:padding="8dp"
+        android:hint="Unit"
         android:inputType="numberDecimal"
-        android:textSize="14sp"
+        android:textSize="12sp"
+        android:layout_marginEnd="4dp"/>
+
+    <TextView
+        android:id="@+id/tvTotalLinea"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:background="#F3F4F6"
+        android:padding="8dp"
+        android:text="$0.00"
+        android:gravity="end"
+        android:textSize="12sp"
+        android:textColor="@color/text_grey"
         android:layout_marginEnd="4dp"/>
 
     <ImageView
         android:id="@+id/btnEliminar"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@android:drawable/ic_delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_close"
         app:tint="#EF4444"
         android:clickable="true"
-        android:focusable="true"
-        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        android:focusable="true"/>
 
 </LinearLayout>

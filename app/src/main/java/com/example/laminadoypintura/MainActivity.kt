@@ -10,6 +10,7 @@ import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private val selectedServices = mutableSetOf<String>()
 
     // Global Params
-    private lateinit var etTiempoEstimado: EditText
+    private lateinit var spTiempoEstimado: Spinner
     private lateinit var etPiezasIntervenir: EditText
     private lateinit var btnGenerar: MaterialButton
 
@@ -157,13 +158,20 @@ class MainActivity : AppCompatActivity() {
 
         gridServicios = findViewById(R.id.gridServicios)
 
-        etTiempoEstimado = findViewById(R.id.etTiempoEstimado)
+        spTiempoEstimado = findViewById<Spinner>(R.id.spTiempoEstimado)
         etPiezasIntervenir = findViewById(R.id.etPiezasIntervenir)
 
         btnGenerar = findViewById(R.id.btnGenerar)
 
-        // Valores por defecto
-        etTiempoEstimado.setText("2 a 3 Días Hábiles")
+        // Setup Spinner
+        val adapter = android.widget.ArrayAdapter.createFromResource(
+            this,
+            R.array.tiempo_estimado_options,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spTiempoEstimado.adapter = adapter
+
         etPiezasIntervenir.setText("1")
     }
 
@@ -397,16 +405,16 @@ class MainActivity : AppCompatActivity() {
         val hojalateria = mutableListOf<ItemCosto>()
         for (view in hojalateriaViews) {
             val desc = view.findViewById<EditText>(R.id.etDescripcion).text.toString()
-            val precio = view.findViewById<EditText>(R.id.etPrecio).text.toString().toDoubleOrNull() ?: 0.0
+            val precio = view.findViewById<TextView>(R.id.tvTotalLinea).text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
             if (desc.isNotEmpty()) hojalateria.add(ItemCosto(desc, precio))
         }
 
         // Pintura Dinamica
         val pintura = mutableListOf<ItemPintura>()
         for (view in pinturaViews) {
-            val pieza = view.findViewById<EditText>(R.id.etPieza).text.toString()
+            val pieza = view.findViewById<EditText>(R.id.etDescripcion).text.toString()
             val cant = view.findViewById<EditText>(R.id.etCantidad).text.toString().toIntOrNull() ?: 1
-            val unit = view.findViewById<EditText>(R.id.etUnidad).text.toString()
+            val unit = "Pieza" 
             val precio = view.findViewById<EditText>(R.id.etPrecio).text.toString().toDoubleOrNull() ?: 0.0
             if (pieza.isNotEmpty()) pintura.add(ItemPintura(pieza, cant, unit, precio))
         }
@@ -415,7 +423,7 @@ class MainActivity : AppCompatActivity() {
         val repuestos = mutableListOf<ItemCosto>()
         for (view in repuestoViews) {
             val desc = view.findViewById<EditText>(R.id.etDescripcion).text.toString()
-            val precio = view.findViewById<EditText>(R.id.etPrecio).text.toString().toDoubleOrNull() ?: 0.0
+            val precio = view.findViewById<TextView>(R.id.tvTotalLinea).text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
             if (desc.isNotEmpty()) repuestos.add(ItemCosto(desc, precio))
         }
 
@@ -432,7 +440,7 @@ class MainActivity : AppCompatActivity() {
             pintura = pintura,
             repuestos = repuestos,
             anticipo = etAnticipo.text.toString().toDoubleOrNull() ?: 0.0,
-            tiempoEstimado = etTiempoEstimado.text.toString(),
+            tiempoEstimado = spTiempoEstimado.selectedItem.toString(),
             piezasIntervenir = etPiezasIntervenir.text.toString().toIntOrNull() ?: 1,
             datosTaller = datosTaller
         )
@@ -483,65 +491,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addHojalateriaRow() {
-        val view = layoutInflater.inflate(R.layout.item_costo_simple, null)
+    private fun setupRowListeners(view: View, container: LinearLayout, list: MutableList<View>) {
+        val etCantidad = view.findViewById<EditText>(R.id.etCantidad)
         val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
+        val tvTotalLinea = view.findViewById<TextView>(R.id.tvTotalLinea)
         val btnEliminar = view.findViewById<View>(R.id.btnEliminar)
 
-        etPrecio.addTextChangedListener(object : android.text.TextWatcher {
-            override fun afterTextChanged(s: android.text.Editable?) = calculateTotals()
+        val watcher = object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val qty = etCantidad.text.toString().toIntOrNull() ?: 0
+                val price = etPrecio.text.toString().toDoubleOrNull() ?: 0.0
+                val total = qty * price
+                tvTotalLinea.text = "$${String.format("%.2f", total)}"
+                calculateTotals()
+            }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        btnEliminar.setOnClickListener {
-            containerHojalateria.removeView(view)
-            hojalateriaViews.remove(view)
-            calculateTotals()
         }
 
+        etCantidad.addTextChangedListener(watcher)
+        etPrecio.addTextChangedListener(watcher)
+
+        btnEliminar.setOnClickListener {
+            container.removeView(view)
+            list.remove(view)
+            calculateTotals()
+        }
+    }
+
+    private fun addHojalateriaRow() {
+        val view = layoutInflater.inflate(R.layout.item_costo_simple, null)
+        setupRowListeners(view, containerHojalateria, hojalateriaViews)
         containerHojalateria.addView(view)
         hojalateriaViews.add(view)
     }
 
     private fun addPinturaRow() {
         val view = layoutInflater.inflate(R.layout.item_costo_pintura, null)
-        val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
-        val btnEliminar = view.findViewById<View>(R.id.btnEliminar)
-
-        etPrecio.addTextChangedListener(object : android.text.TextWatcher {
-            override fun afterTextChanged(s: android.text.Editable?) = calculateTotals()
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        btnEliminar.setOnClickListener {
-            containerPintura.removeView(view)
-            pinturaViews.remove(view)
-            calculateTotals()
-        }
-
+        setupRowListeners(view, containerPintura, pinturaViews)
         containerPintura.addView(view)
         pinturaViews.add(view)
     }
 
     private fun addRepuestoRow() {
         val view = layoutInflater.inflate(R.layout.item_costo_simple, null)
-        val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
-        val btnEliminar = view.findViewById<View>(R.id.btnEliminar)
-
-        etPrecio.addTextChangedListener(object : android.text.TextWatcher {
-            override fun afterTextChanged(s: android.text.Editable?) = calculateTotals()
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        btnEliminar.setOnClickListener {
-            containerRepuestos.removeView(view)
-            repuestoViews.remove(view)
-            calculateTotals()
-        }
-
+        setupRowListeners(view, containerRepuestos, repuestoViews)
         containerRepuestos.addView(view)
         repuestoViews.add(view)
     }
@@ -550,24 +544,24 @@ class MainActivity : AppCompatActivity() {
         // Hojalateria
         var totalHoj = 0.0
         for (view in hojalateriaViews) {
-            val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
-            totalHoj += etPrecio.text.toString().toDoubleOrNull() ?: 0.0
+            val total = view.findViewById<TextView>(R.id.tvTotalLinea).text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
+            totalHoj += total
         }
         tvTotalHojalateria.text = "$${String.format("%.2f", totalHoj)}"
 
         // Pintura
         var totalPin = 0.0
         for (view in pinturaViews) {
-            val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
-            totalPin += etPrecio.text.toString().toDoubleOrNull() ?: 0.0
+            val total = view.findViewById<TextView>(R.id.tvTotalLinea).text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
+            totalPin += total
         }
         tvTotalPintura.text = "$${String.format("%.2f", totalPin)}"
 
         // Repuestos
         var totalRep = 0.0
         for (view in repuestoViews) {
-            val etPrecio = view.findViewById<EditText>(R.id.etPrecio)
-            totalRep += etPrecio.text.toString().toDoubleOrNull() ?: 0.0
+            val total = view.findViewById<TextView>(R.id.tvTotalLinea).text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
+            totalRep += total
         }
         tvTotalRepuestos.text = "$${String.format("%.2f", totalRep)}"
 

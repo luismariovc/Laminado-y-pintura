@@ -386,19 +386,37 @@
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardProfile">
 
+
+            <ImageView
+                android:id="@+id/iconCliente"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/tvClienteTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DATOS DEL CLIENTE"
-                android:textColor="@color/black"
+                android:textColor="@color/premium_black"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:drawablePadding="8dp"
-                app:drawableStartCompat="@drawable/ic_launcher_foreground"
-                app:drawableTint="@color/premium_red"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconCliente"
+                app:layout_constraintTop_toTopOf="@id/iconCliente"
+                app:layout_constraintBottom_toBottomOf="@id/iconCliente"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerCliente"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconCliente"/>
 
             <!-- Nombre Cliente -->
             <TextView
@@ -408,9 +426,9 @@
                 android:text="NOMBRE CLIENTE:"
                 android:textSize="10sp"
                 android:textColor="@color/text_grey"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvClienteTitle"/>
+                app:layout_constraintTop_toBottomOf="@id/dividerCliente"/>
 
             <EditText
                 android:id="@+id/etClienteNombre"
@@ -515,19 +533,36 @@
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardCliente">
 
+            <ImageView
+                android:id="@+id/iconVehiculo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_car_profile"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/tvVehiculoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DATOS DEL VEHÍCULO"
-                android:textColor="@color/black"
+                android:textColor="@color/premium_black"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:drawablePadding="8dp"
-                app:drawableStartCompat="@drawable/ic_launcher_foreground"
-                app:drawableTint="@color/premium_red"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconVehiculo"
+                app:layout_constraintTop_toTopOf="@id/iconVehiculo"
+                app:layout_constraintBottom_toBottomOf="@id/iconVehiculo"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerVehiculo"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconVehiculo"/>
 
             <!-- Row 1: Marca & Modelo -->
             <TextView
@@ -537,9 +572,9 @@
                 android:text="MARCA:"
                 android:textSize="10sp"
                 android:textColor="@color/text_grey"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvVehiculoTitle"/>
+                app:layout_constraintTop_toBottomOf="@id/dividerVehiculo"/>
 
             <TextView
                 android:id="@+id/lblModelo"
@@ -548,9 +583,9 @@
                 android:text="MODELO/AÑO:"
                 android:textSize="10sp"
                 android:textColor="@color/text_grey"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="@id/etVehiculoModelo"
-                app:layout_constraintTop_toBottomOf="@id/tvVehiculoTitle"/>
+                app:layout_constraintTop_toBottomOf="@id/dividerVehiculo"/>
 
             <EditText
                 android:id="@+id/etVehiculoMarca"
@@ -666,19 +701,36 @@
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardVehiculo">
 
+            <ImageView
+                android:id="@+id/iconServicios"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tools"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/tvServiciosTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TIPO DE SERVICIO Y DAÑO"
-                android:textColor="@color/black"
+                android:textColor="@color/premium_black"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:drawablePadding="8dp"
-                app:drawableStartCompat="@drawable/ic_launcher_foreground"
-                app:drawableTint="@color/premium_red"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconServicios"
+                app:layout_constraintTop_toTopOf="@id/iconServicios"
+                app:layout_constraintBottom_toBottomOf="@id/iconServicios"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerServicios"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconServicios"/>
 
             <TextView
                 android:id="@+id/tvServiciosSubtitle"
@@ -687,9 +739,9 @@
                 android:text="Seleccione los servicios a realizar:"
                 android:textSize="12sp"
                 android:textColor="@color/text_grey"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvServiciosTitle"/>
+                app:layout_constraintTop_toBottomOf="@id/dividerServicios"/>
 
             <!-- Grid de Servicios (Simulado con Flexbox o Flow si fuera posible, usaremos Grid estatica simple por ahora) -->
             <GridLayout
@@ -716,14 +768,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/gridServicios"/>
 
-            <EditText
-                android:id="@+id/etTiempoEstimado"
+            <Spinner
+                android:id="@+id/spTiempoEstimado"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_rounded_input"
-                android:padding="12dp"
-                android:hint="Ej. 2 a 3 Días"
-                android:textSize="14sp"
+                android:paddingStart="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -751,7 +801,7 @@
                 android:textSize="14sp"
                 android:inputType="number"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toEndOf="@id/etTiempoEstimado"
+                app:layout_constraintStart_toEndOf="@id/spTiempoEstimado"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblPiezas"/>
 

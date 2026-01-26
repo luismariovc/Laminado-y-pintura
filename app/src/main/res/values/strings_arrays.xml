@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tiempo_estimado_options">
+        <item>2 a 3 Días Hábiles</item>
+        <item>4 a 5 Días Hábiles</item>
+        <item>1 Semana</item>
+        <item>10 a 15 Días</item>
+        <item>Más de 2 Semanas</item>
+    </string-array>
+</resources>
