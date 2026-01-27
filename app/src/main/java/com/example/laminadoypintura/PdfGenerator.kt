@@ -199,29 +199,74 @@ class PdfGenerator(private val context: Context) {
 
         // ================= FINANCIAL DETAILS =================
         
-        fun drawSection(title: String, items: List<Any>, getDesc: (Any) -> String, getPrice: (Any) -> Double) {
+        fun drawSection(title: String, items: List<Any>, getDesc: (Any) -> String, getQty: (Any) -> Int, getUnit: (Any) -> Double, getTotal: (Any) -> Double) {
             if (items.isEmpty()) return
             
             // Draw Header
             canvas.drawRect(margin, y, width - margin, y + 25, sectionHeaderBgPaint)
             canvas.drawText(title, margin + 10, y + 17, sectionHeaderTextPaint)
-            val sectionTotal = items.sumOf { getPrice(it) }
+            
+            // Section Total (Right Aligned)
+            val sectionTotal = items.sumOf { getTotal(it) }
             canvas.drawText("$${String.format("%.2f", sectionTotal)}", width - margin - 10, y + 17, pricePaint)
             
             y += 25
             
-            // Draw Items
+            // Draw Column Headers (Optional, or just list items)
+            // Let's just list items cleanly: Qty | Description | Unit $ | Total $
+            // Coords: Qty(margin+10), Desc(margin+40), Unit(width-130), Total(width-10)
+            
             items.forEach { item ->
-                canvas.drawText(getDesc(item), margin + 10, y + 15, textPaint)
-                canvas.drawText("$${String.format("%.2f", getPrice(item))}", width - margin - 10, y + 15, itemPricePaint)
+                val qty = getQty(item)
+                val desc = getDesc(item)
+                val unitPrice = getUnit(item)
+                val totalPrice = getTotal(item)
+                
+                // Qty
+                canvas.drawText("$qty", margin + 10, y + 15, textPaint)
+                
+                // Description (Truncate if too long)
+                val maxDescLen = 45 // chars approx
+                val displayDesc = if (desc.length > maxDescLen) desc.substring(0, maxDescLen) + "..." else desc
+                canvas.drawText(displayDesc, margin + 40, y + 15, textPaint)
+                
+                // Unit Price
+                canvas.drawText("$${String.format("%.2f", unitPrice)}", width - 120, y + 15, itemPricePaint)
+                
+                // Total Price
+                canvas.drawText("$${String.format("%.2f", totalPrice)}", width - margin - 10, y + 15, itemPricePaint)
+                
                 y += 20
             }
             y += 10 // Spacing after section
         }
 
-        drawSection("1. HOJALATERÍA", cotizacion.hojalateria, { (it as ItemCosto).descripcion }, { (it as ItemCosto).precio })
-        drawSection("2. PINTURA", cotizacion.pintura, { (it as ItemPintura).run { "$pieza ($cantidad $unidad)" } }, { (it as ItemPintura).precio })
-        drawSection("3. REPUESTOS", cotizacion.repuestos, { (it as ItemCosto).descripcion }, { (it as ItemCosto).precio })
+        // Logic for extracting fields from varying model types (Pintura vs CostoSimple)
+        // Note: ItemCosto doesn't strictly have quantity in model yet, but UI does. 
+        // We need to check if Models.kt supports quantity for general items.
+        // If not, we defaults to 1 for Hojalateria/Repuestos if the model wasn't updated.
+        // Checking Models.kt is prudent. Assuming for now we need adaptors.
+        
+        drawSection("1. HOJALATERÍA", cotizacion.hojalateria, 
+            { (it as ItemCosto).descripcion }, 
+            { 1 }, // Default Qty 1 for simple items if model not updated
+            { (it as ItemCosto).precio }, 
+            { (it as ItemCosto).precio }
+        )
+        
+        drawSection("2. PINTURA", cotizacion.pintura, 
+            { (it as ItemPintura).pieza }, 
+            { (it as ItemPintura).cantidad }, 
+            { (it as ItemPintura).precio }, 
+            { (it as ItemPintura).cantidad * (it as ItemPintura).precio }
+        )
+        
+        drawSection("3. REPUESTOS", cotizacion.repuestos, 
+            { (it as ItemCosto).descripcion }, 
+            { 1 }, // Default 1
+            { (it as ItemCosto).precio },
+            { (it as ItemCosto).precio }
+        )
 
         y += 20
 

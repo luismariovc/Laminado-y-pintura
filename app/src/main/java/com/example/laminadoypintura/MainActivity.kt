@@ -239,6 +239,12 @@ class MainActivity : AppCompatActivity() {
                 // Actualizar UI
                 val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
                 val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
+                
+                imgLogoPreview.setImageBitmap(scaledBitmap)
+                imgLogoPreview.imageTintList = null // FIX: Remove red tint
+                imgLogoPreview.setPadding(0,0,0,0)
+                imgLogoPreview.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+                
                 btnRemoveLogo?.visibility = android.view.View.VISIBLE
             }
         } catch (e: Exception) {
@@ -260,7 +266,11 @@ class MainActivity : AppCompatActivity() {
 
         // Btn Subir Logo Listener (Container click)
         findViewById<android.view.View>(R.id.btnSubirLogo).setOnClickListener { 
-            pickImage.launch("image/*")
+            try {
+                pickImage.launch("image/*")
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error al abrir galería: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Btn Remove Logo Listener
@@ -273,6 +283,14 @@ class MainActivity : AppCompatActivity() {
              base64Logo = null
              val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
              val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
+             
+             // Restore default state
+             imgLogoPreview.setImageResource(R.drawable.ic_image_upload)
+             imgLogoPreview.imageTintList = android.content.res.ColorStateList.valueOf(getColor(R.color.premium_red))
+             val padding = (8 * resources.displayMetrics.density).toInt()
+             imgLogoPreview.setPadding(padding, padding, padding, padding)
+             imgLogoPreview.scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+             
              btnRemoveLogo.visibility = android.view.View.GONE
         }
 
@@ -601,7 +619,14 @@ class MainActivity : AppCompatActivity() {
                 
                 val imgLogoPreview = findViewById<android.widget.ImageView>(R.id.imgLogoPreview)
                 val btnRemoveLogo = findViewById<android.view.View>(R.id.btnRemoveLogo)
-                btnRemoveLogo?.visibility = android.view.View.VISIBLE
+                
+                if (bitmap != null) {
+                    imgLogoPreview.setImageBitmap(bitmap)
+                    imgLogoPreview.imageTintList = null // FIX: Remove red tint
+                    imgLogoPreview.setPadding(0,0,0,0)
+                    imgLogoPreview.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+                    btnRemoveLogo?.visibility = android.view.View.VISIBLE
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

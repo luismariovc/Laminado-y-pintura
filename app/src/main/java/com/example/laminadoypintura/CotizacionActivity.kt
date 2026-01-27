@@ -161,30 +161,21 @@ class CotizacionActivity : AppCompatActivity() {
                     file
                 )
 
-                val intent = Intent(Intent.ACTION_SEND)
-                intent.type = "application/pdf"
-                intent.putExtra(Intent.EXTRA_STREAM, uri)
-                intent.setPackage("com.whatsapp") // Target WhatsApp directly
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                
-                // Attempt to target specific number
-                val rawPhone = cotizacion.cliente.telefono.filter { it.isDigit() }
-                if (rawPhone.isNotEmpty()) {
-                    // Mexico Fix
-                    val jidPhone = if (rawPhone.length == 10) "521$rawPhone" else rawPhone
-                    val jid = "$jidPhone@s.whatsapp.net"
-                    intent.putExtra("jid", jid)
+                // Intent Genérico de Compartir
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "application/pdf"
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    // Optional: Message body for apps that support it (like Email/Telegram)
+                    putExtra(Intent.EXTRA_TEXT, "Adjunto cotización para ${cotizacion.vehiculo.marca} ${cotizacion.vehiculo.modelo}")
                 }
-                
-                Toast.makeText(this, "Selecciona el contacto para enviar el PDF", Toast.LENGTH_LONG).show()
-                startActivity(intent)
+
+                // Abrir el selector del sistema (Share Sheet)
+                startActivity(Intent.createChooser(intent, "Compartir Cotización vía..."))
+
             } catch (e: Exception) {
-                // Determine if error is because WhatsApp is not installed
-                if (e.message?.contains("No Activity found") == true) {
-                    Toast.makeText(this, "WhatsApp no está instalado", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Error al compartir PDF: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+                e.printStackTrace()
+                Toast.makeText(this, "Error al compartir: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(this, "Error al generar el PDF", Toast.LENGTH_SHORT).show()
