@@ -454,6 +454,9 @@ class QuoteFragment : Fragment() {
             datosTaller = datosTaller
         )
 
+        // Save to Repository
+        QuoteRepository(requireContext()).saveQuote(cotizacion)
+
         val intent = Intent(requireContext(), CotizacionActivity::class.java)
         intent.putExtra("COTIZACION_DATA", cotizacion)
         intent.putExtra("AUTO_SEND_WHATSAPP", true)
