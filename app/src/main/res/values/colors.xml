@@ -9,4 +9,11 @@
     <color name="input_grey">#F3F4F6</color>
     <color name="text_grey">#6B7280</color>
     <color name="card_shadow">#1A000000</color>
+    <!-- New Login Design Palette -->
+    <color name="login_card_bg">#344152</color> <!-- Slate Blue -->
+    <color name="login_input_bg">#435061</color> <!-- Lighter Slate -->
+    <color name="login_accent">#F59E0B</color> <!-- Gold -->
+    <color name="login_text_primary">#E5E7EB</color>
+    <color name="login_text_secondary">#9CA3AF</color>
+    <color name="login_button_bg">#4B5563</color>
 </resources>

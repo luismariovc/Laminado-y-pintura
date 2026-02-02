@@ -40,7 +40,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun goToMainActivity() {
         if (!isFinishing) {
-            startActivity(Intent(this, MainActivity::class.java))
+            val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
             finish()
         }
     }
