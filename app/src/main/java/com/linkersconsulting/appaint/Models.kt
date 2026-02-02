@@ -1,4 +1,4 @@
-package com.example.laminadoypintura
+package com.linkersconsulting.appaint
 
 import java.io.Serializable
 

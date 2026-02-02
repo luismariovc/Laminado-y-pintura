@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174583754722",
+    "project_id": "ap-paint",
+    "storage_bucket": "ap-paint.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174583754722:android:a42b10da9a529241aa53bb",
+        "android_client_info": {
+          "package_name": "com.linkersconsulting.appaint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174583754722-qomcn0b9k842hoo0ajc9v96jd167smjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-kz0fUm74Uvwj2TdQmpps-L9bB90KrJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174583754722-qomcn0b9k842hoo0ajc9v96jd167smjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
