@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F5F5"
+    android:layout_marginBottom="60dp"> <!-- Space for BottomNav if overlaying, but usually not needed if organized nicely. Adding margin just in case of overlap constraint -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp">
+
+        <!-- HEADER -->
+        <View
+            android:id="@+id/headerBg"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headerContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/headerBg"
+            app:layout_constraintBottom_toBottomOf="@id/headerBg">
+
+            <!-- LOGO SECTION (LEFT) -->
+            <LinearLayout
+                android:id="@+id/logoContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/headerDivider">
+
+                <ImageView
+                    android:id="@+id/ivHeaderIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/logo_paint"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/tvAppTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LAMINADO Y PINTURA"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold|italic"
+                        android:fontFamily="sans-serif-black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="COTIZACIÓN Y PRESUPUESTO"
+                        android:textColor="@color/premium_red"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.2"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- VERTICAL DIVIDER -->
+            <View
+                android:id="@+id/headerDivider"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:background="#33FFFFFF"
+                app:layout_constraintStart_toEndOf="@id/logoContainer"
+                app:layout_constraintEnd_toStartOf="@id/infoContainer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"/>
+
+            <!-- INFO SECTION (RIGHT) -->
+            <LinearLayout
+                android:id="@+id/infoContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <!-- FOLIO -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FOLIO"
+                        android:textColor="#9CA3AF"
+                        android:textSize="10sp"
+                        android:layout_marginEnd="4dp"/>
+                    <TextView
+                        android:id="@+id/tvFolioHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="#003"
+                        android:textColor="@color/premium_red"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <!-- TIME -->
+                <TextView
+                    android:id="@+id/tvHeaderTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="12:45 PM"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"/>
+
+                <!-- DATE -->
+                <TextView
+                    android:id="@+id/tvHeaderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Lun, 26 Ene 2026"
+                    android:textColor="#9CA3AF"
+                    android:textSize="10sp"
+                    android:textAllCaps="true"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- PERFIL DEL TALLER CARD -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_card_profile"
+            android:elevation="4dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/headerBg">
+
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_store"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PERFIL DEL TALLER"
+                android:textColor="@color/premium_black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconProfile"
+                app:layout_constraintTop_toTopOf="@id/iconProfile"
+                app:layout_constraintBottom_toBottomOf="@id/iconProfile"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerProfile"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconProfile"/>
+
+            <!-- ROW 1: Nombre Taller -->
+            <TextView
+                android:id="@+id/lblTallerNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOMBRE DEL TALLER:"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerProfile"/>
+
+            <EditText
+                android:id="@+id/etTallerNombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="10dp"
+                android:hint="Ej. MASTER PAINT"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guidelineOld"
+                app:layout_constraintTop_toBottomOf="@id/lblTallerNombre"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineOld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
+
+            <!-- SUBIR LOGO AREA (Right Side) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnSubirLogo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintStart_toEndOf="@id/guidelineOld"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/dividerProfile">
+
+                <ImageView
+                    android:id="@+id/imgLogoPreview"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_image_upload"
+                    app:tint="@color/premium_red"
+                    android:padding="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnRemoveLogo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_close"
+                    app:tint="@color/premium_red"
+                    android:visibility="gone"
+                    android:elevation="4dp"
+                    app:layout_constraintTop_toTopOf="@id/imgLogoPreview"
+                    app:layout_constraintEnd_toEndOf="@id/imgLogoPreview"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="-4dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!-- ROW 2: Encargado / Telefono -->
+            <TextView
+                android:id="@+id/lblEncargado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ENCARGADO:"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etTallerNombre"/>
+
+            <TextView
+                android:id="@+id/lblTallerTel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TELÉFONO:"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="@id/barrierMid"
+                app:layout_constraintTop_toTopOf="@id/lblEncargado"/>
+
+             <EditText
+                android:id="@+id/etTallerEncargado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="10dp"
+                android:hint="Juan Pérez"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/barrierMid"
+                app:layout_constraintTop_toBottomOf="@id/lblEncargado"/>
+
+            <EditText
+                android:id="@+id/etTallerTelefono"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="10dp"
+                android:hint="55 1234 5678"
+                android:inputType="phone"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/barrierMid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblTallerTel"/>
+
+            <!-- Middle Barrier (Visual approx 37% of width for first col) -->
+             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/barrierMid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+
+            <!-- ROW 3: Email / Direccion -->
+            <TextView
+                android:id="@+id/lblTallerEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EMAIL:"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etTallerEncargado"/>
+
+             <TextView
+                android:id="@+id/lblTallerDir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DIRECCIÓN:"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/etTallerTelefono"
+                app:layout_constraintTop_toBottomOf="@id/etTallerEncargado"/>
+
+            <EditText
+                android:id="@+id/etTallerEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="10dp"
+                android:hint="contacto@taller.com"
+                android:inputType="textEmailAddress"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/barrierMid"
+                app:layout_constraintTop_toBottomOf="@id/lblTallerEmail"/>
+
+             <EditText
+                android:id="@+id/etTallerDireccion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="10dp"
+                android:hint="Calle y Número"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/barrierMid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblTallerDir"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <!-- DATOS DEL CLIENTE CARD -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_profile"
+            android:elevation="4dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/cardProfile">
+
+
+            <ImageView
+                android:id="@+id/iconCliente"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvClienteTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DATOS DEL CLIENTE"
+                android:textColor="@color/premium_black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconCliente"
+                app:layout_constraintTop_toTopOf="@id/iconCliente"
+                app:layout_constraintBottom_toBottomOf="@id/iconCliente"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerCliente"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconCliente"/>
+
+            <!-- Nombre Cliente -->
+            <TextView
+                android:id="@+id/lblClienteNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOMBRE CLIENTE:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerCliente"/>
+
+            <EditText
+                android:id="@+id/etClienteNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/lblClienteNombre"/>
+
+            <!-- Telefono -->
+            <TextView
+                android:id="@+id/lblClienteTel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TELÉFONO:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etClienteNombre"/>
+
+            <EditText
+                android:id="@+id/etClienteTelefono"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:inputType="phone"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/etClienteEmail"
+                app:layout_constraintTop_toBottomOf="@id/lblClienteTel"/>
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/lblClienteEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EMAIL:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/etClienteEmail"
+                app:layout_constraintTop_toBottomOf="@id/etClienteNombre"/>
+
+            <EditText
+                android:id="@+id/etClienteEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@id/etClienteTelefono"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblClienteEmail"/>
+
+            <!-- Domicilio -->
+            <TextView
+                android:id="@+id/lblClienteDom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DOMICILIO:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etClienteTelefono"/>
+
+            <EditText
+                android:id="@+id/etClienteDomicilio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/lblClienteDom"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <!-- DATOS DEL VEHÍCULO CARD -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardVehiculo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_profile"
+            android:elevation="4dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/cardCliente">
+
+            <ImageView
+                android:id="@+id/iconVehiculo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_car_profile"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvVehiculoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DATOS DEL VEHÍCULO"
+                android:textColor="@color/premium_black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconVehiculo"
+                app:layout_constraintTop_toTopOf="@id/iconVehiculo"
+                app:layout_constraintBottom_toBottomOf="@id/iconVehiculo"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerVehiculo"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconVehiculo"/>
+
+            <!-- Row 1: Marca & Modelo -->
+            <TextView
+                android:id="@+id/lblMarca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MARCA:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerVehiculo"/>
+
+            <TextView
+                android:id="@+id/lblModelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MODELO/AÑO:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/etVehiculoModelo"
+                app:layout_constraintTop_toBottomOf="@id/dividerVehiculo"/>
+
+            <EditText
+                android:id="@+id/etVehiculoMarca"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint="Marca..."
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/etVehiculoModelo"
+                app:layout_constraintTop_toBottomOf="@id/lblMarca"/>
+
+            <EditText
+                android:id="@+id/etVehiculoModelo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint="Ej. Jetta 2019"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@id/etVehiculoMarca"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblModelo"/>
+
+            <!-- Row 2: Color & Placas -->
+            <TextView
+                android:id="@+id/lblColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COLOR:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etVehiculoMarca"/>
+
+            <TextView
+                android:id="@+id/lblPlacas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PLACAS:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/etVehiculoPlacas"
+                app:layout_constraintTop_toBottomOf="@id/etVehiculoMarca"/>
+
+            <EditText
+                android:id="@+id/etVehiculoColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/etVehiculoPlacas"
+                app:layout_constraintTop_toBottomOf="@id/lblColor"/>
+
+            <EditText
+                android:id="@+id/etVehiculoPlacas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint=""
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@id/etVehiculoColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblPlacas"/>
+
+            <!-- Row 3: Codigo Pintura -->
+             <TextView
+                android:id="@+id/lblCodigoPintura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CÓDIGO DE PINTURA:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etVehiculoColor"/>
+
+            <EditText
+                android:id="@+id/etCodigoPintura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint="Ej. NH-731P"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/lblCodigoPintura"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- TIPO DE SERVICIO Y DAÑO CARD -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_profile"
+            android:elevation="4dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/cardVehiculo">
+
+            <ImageView
+                android:id="@+id/iconServicios"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tools"
+                app:tint="@color/premium_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvServiciosTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIPO DE SERVICIO Y DAÑO"
+                android:textColor="@color/premium_black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/iconServicios"
+                app:layout_constraintTop_toTopOf="@id/iconServicios"
+                app:layout_constraintBottom_toBottomOf="@id/iconServicios"/>
+
+            <!-- SEPARATOR -->
+            <View
+                android:id="@+id/dividerServicios"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E7EB"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/iconServicios"/>
+
+            <TextView
+                android:id="@+id/tvServiciosSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccione los servicios a realizar:"
+                android:textSize="12sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerServicios"/>
+
+            <!-- Grid de Servicios (Simulado con Flexbox o Flow si fuera posible, usaremos Grid estatica simple por ahora) -->
+            <GridLayout
+                android:id="@+id/gridServicios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvServiciosSubtitle">
+                
+                <!-- Los botones se añadirán programáticamente o se pueden definir aquí si son fijos -->
+                <!-- Placeholder para el contenedor de botones -->
+            </GridLayout>
+
+            <!-- Info Adicional Servicos -->
+             <TextView
+                android:id="@+id/lblTiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIEMPO ESTIMADO:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gridServicios"/>
+
+            <Spinner
+                android:id="@+id/spTiempoEstimado"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rounded_input"
+                android:paddingStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/etPiezasIntervenir"
+                app:layout_constraintTop_toBottomOf="@id/lblTiempo"/>
+
+             <TextView
+                android:id="@+id/lblPiezas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PIEZAS A INTERVENIR:"
+                android:textSize="10sp"
+                android:textColor="@color/text_grey"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/etPiezasIntervenir"
+                app:layout_constraintTop_toBottomOf="@id/gridServicios"/>
+
+
+            <EditText
+                android:id="@+id/etPiezasIntervenir"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_input"
+                android:padding="12dp"
+                android:hint="#"
+                android:textSize="14sp"
+                android:inputType="number"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@id/spTiempoEstimado"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblPiezas"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 1. HOJALATERÍA -->
+        <LinearLayout
+            android:id="@+id/cardHojalateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_profile"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
+            android:padding="0dp" 
+            app:layout_constraintTop_toBottomOf="@id/cardServicios">
+            
+            <!-- Header Hojalateria -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1F2937" 
+                android:padding="12dp"
+                android:orientation="horizontal">
+                
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1. HOJALATERÍA"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:drawableStart="@android:drawable/ic_menu_manage"
+                    android:drawablePadding="8dp"
+                    app:drawableTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tvTotalHojalateria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerHojalateria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <!-- Items se añaden dinamicamente aqui -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAgregarHojalateria"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ LABOR HOJALATERÍA"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
+
+        <!-- 2. PINTURA -->
+        <LinearLayout
+            android:id="@+id/cardPintura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_profile"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
+            android:padding="0dp"
+            app:layout_constraintTop_toBottomOf="@id/cardHojalateria">
+            
+            <!-- Header Pintura -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1F2937" 
+                android:padding="12dp"
+                android:orientation="horizontal">
+                
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2. PINTURA"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:drawableStart="@android:drawable/ic_menu_gallery"
+                    android:drawablePadding="8dp"
+                    app:drawableTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tvTotalPintura"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerPintura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <!-- Items se añaden dinamicamente aqui -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAgregarPintura"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ PIEZA PINTURA"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
+
+        <!-- 3. REPUESTOS -->
+        <LinearLayout
+            android:id="@+id/cardRepuestos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_profile"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
+            android:padding="0dp"
+            app:layout_constraintTop_toBottomOf="@id/cardPintura">
+            
+            <!-- Header Repuestos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1F2937" 
+                android:padding="12dp"
+                android:orientation="horizontal">
+                
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3. REPUESTOS"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:drawableStart="@android:drawable/ic_menu_preferences"
+                    android:drawablePadding="8dp"
+                    app:drawableTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tvTotalRepuestos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerRepuestos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <!-- Items se añaden dinamicamente aqui -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAgregarRepuesto"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ AGREGAR REPUESTO"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
+
+        <!-- RESUMEN FINANCIERO (FOOTER) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_profile"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:elevation="4dp"
+            android:padding="0dp"
+            app:layout_constraintTop_toBottomOf="@id/cardRepuestos">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#374151" 
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <!-- Totales Row -->
+                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="3">
+                    
+                    <!-- Total Presupuesto -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TOTAL"
+                            android:textColor="#D1D5DB"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tvGranTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$0.00"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+
+                    <!-- Anticipo -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ANTICIPO (50%)"
+                            android:textColor="#D1D5DB"
+                            android:textSize="12sp"/>
+                        
+                         <EditText
+                            android:id="@+id/etAnticipo"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_rounded_input"
+                            android:padding="8dp"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:text="0.00"
+                            android:textColor="@color/premium_red"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <!-- Saldo -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PENDIENTE"
+                            android:textColor="#D1D5DB"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tvSaldoPendiente"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$0.00"
+                            android:textColor="#FBBF24"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+                 </LinearLayout>
+            </LinearLayout>
+
+             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGenerar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GENERAR COTIZACIÓN PROFESIONAL"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="20dp"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/premium_red"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="8dp"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
