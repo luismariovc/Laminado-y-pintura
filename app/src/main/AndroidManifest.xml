@@ -44,11 +44,11 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

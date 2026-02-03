@@ -20,6 +20,51 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         setupListeners()
+        setupHeaderImage()
+    }
+
+    private fun setupHeaderImage() {
+        // Post to view queue to ensure dimensions are available
+        binding.imgHeader.post {
+            try {
+                val imgHeader = binding.imgHeader
+                val drawable = imgHeader.drawable ?: return@post
+                
+                val viewWidth = imgHeader.width
+                val viewHeight = imgHeader.height
+                
+                if (viewWidth == 0 || viewHeight == 0) return@post
+
+                val imageWidth = drawable.intrinsicWidth
+                val imageHeight = drawable.intrinsicHeight
+
+                val scale: Float = if (imageWidth * viewHeight > viewWidth * imageHeight) {
+                    viewHeight.toFloat() / imageHeight.toFloat()
+                } else {
+                    viewWidth.toFloat() / imageWidth.toFloat()
+                }
+
+                val matrix = android.graphics.Matrix()
+                matrix.postScale(scale, scale)
+                
+                // Align Bottom:
+                // The scaled image height will be >= view height.
+                // We want y-translation such that the bottom of image matches bottom of view.
+                val scaledHeight = imageHeight * scale
+                val dy = viewHeight - scaledHeight
+                
+                // Center Horizontally
+                val scaledWidth = imageWidth * scale
+                val dx = (viewWidth - scaledWidth) / 2
+
+                matrix.postTranslate(dx, dy)
+                
+                imgHeader.scaleType = android.widget.ImageView.ScaleType.MATRIX
+                imgHeader.imageMatrix = matrix
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun setupListeners() {
