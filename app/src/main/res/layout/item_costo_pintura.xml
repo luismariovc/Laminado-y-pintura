@@ -16,11 +16,14 @@
         android:padding="8dp"
         android:hint="Descripción"
         android:textSize="12sp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:ellipsize="end"
         android:layout_marginEnd="4dp"/>
 
     <EditText
         android:id="@+id/etCantidad"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_input"
         android:padding="8dp"
@@ -32,7 +35,7 @@
 
     <EditText
         android:id="@+id/etPrecio"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_input"
         android:padding="8dp"
@@ -43,7 +46,7 @@
 
     <TextView
         android:id="@+id/tvTotalLinea"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="#F3F4F6"
         android:padding="8dp"
