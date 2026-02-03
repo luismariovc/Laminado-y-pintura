@@ -32,7 +32,7 @@
         android:layout_marginHorizontal="24dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="12dp"
-        app:cardBackgroundColor="#CC1F2937" 
+        app:cardBackgroundColor="#B3111827" 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85">
@@ -73,11 +73,10 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_search_input"
-                    android:backgroundTint="#F3F4F6"
+                    android:background="@drawable/bg_glass_input"
                     android:hint="Correo Electrónico"
                     android:inputType="textEmailAddress"
-                    android:textColor="#111827"
+                    android:textColor="@color/white"
                     android:textColorHint="#9CA3AF"
                     android:padding="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -97,11 +96,10 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_search_input"
-                    android:backgroundTint="#F3F4F6"
+                    android:background="@drawable/bg_glass_input"
                     android:hint="Contraseña"
                     android:inputType="textPassword"
-                    android:textColor="#111827"
+                    android:textColor="@color/white"
                     android:textColorHint="#9CA3AF"
                     android:padding="16dp" />
             </com.google.android.material.textfield.TextInputLayout>

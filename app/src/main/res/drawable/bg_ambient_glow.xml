@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base Dark Background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#050505" />
+        </shape>
+    </item>
+
+    <!-- Blue Neon Glow (Bottom Right) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="1.0"
+                android:centerY="1.0"
+                android:gradientRadius="800dp"
+                android:startColor="#4000BFFF"
+                android:endColor="#00000000"
+                android:type="radial" />
+        </shape>
+    </item>
+
+    <!-- Red Neon Glow (Bottom Left) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.0"
+                android:centerY="0.8"
+                android:gradientRadius="700dp"
+                android:startColor="#30FF0000"
+                android:endColor="#00000000"
+                android:type="radial" />
+        </shape>
+    </item>
+</layer-list>
