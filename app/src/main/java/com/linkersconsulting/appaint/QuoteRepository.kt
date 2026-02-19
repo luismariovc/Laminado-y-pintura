@@ -31,6 +31,14 @@ class QuoteRepository(private val context: Context) {
         }
     }
 
+    fun getNextFolio(): String {
+        val quotes = getQuotes()
+        if (quotes.isEmpty()) return "001"
+
+        val maxFolio = quotes.maxOfOrNull { it.folio.toIntOrNull() ?: 0 } ?: 0
+        return String.format("%03d", maxFolio + 1)
+    }
+
     private fun saveList(quotes: List<Cotizacion>) {
         try {
             val jsonString = gson.toJson(quotes)

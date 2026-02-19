@@ -3,7 +3,7 @@ package com.linkersconsulting.appaint
 import java.io.Serializable
 
 data class Cotizacion(
-    val folio: String = "003",
+    val folio: String,
     val fecha: String,
     val cliente: Cliente,
     val vehiculo: Vehiculo,

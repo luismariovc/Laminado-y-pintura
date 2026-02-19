@@ -218,10 +218,17 @@ class QuoteFragment : Fragment() {
     // Views - Header
     private lateinit var tvHeaderTime: TextView
     private lateinit var tvHeaderDate: TextView
+    private lateinit var tvFolioHeader: TextView
 
     private fun initHeader(view: View) {
         tvHeaderTime = view.findViewById(R.id.tvHeaderTime)
         tvHeaderDate = view.findViewById(R.id.tvHeaderDate)
+        tvFolioHeader = view.findViewById(R.id.tvFolioHeader)
+
+        // Set Folio
+        val repository = QuoteRepository(requireContext())
+        val nextFolio = repository.getNextFolio()
+        tvFolioHeader.text = "#$nextFolio"
     }
 
     // Real-time Clock Logic
@@ -236,6 +243,12 @@ class QuoteFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         handler.post(timeRunnable) // Start updates
+        // Update folio in case a new quote was generated while we were away (though usually fragment is recreated)
+        val repository = QuoteRepository(requireContext())
+        val nextFolio = repository.getNextFolio()
+        if (::tvFolioHeader.isInitialized) {
+             tvFolioHeader.text = "#$nextFolio"
+        }
     }
 
     override fun onPause() {
@@ -439,8 +452,11 @@ class QuoteFragment : Fragment() {
         }
 
         val fechaActual = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+        val repository = QuoteRepository(requireContext())
+        val nextFolio = repository.getNextFolio()
 
         val cotizacion = Cotizacion(
+            folio = nextFolio,
             fecha = fechaActual,
             cliente = cliente,
             vehiculo = vehiculo,
