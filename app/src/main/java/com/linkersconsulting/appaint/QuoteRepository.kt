@@ -17,6 +17,12 @@ class QuoteRepository(private val context: Context) {
         saveList(quotes)
     }
 
+    fun deleteQuote(cotizacion: Cotizacion) {
+        val quotes = getQuotes().toMutableList()
+        quotes.removeAll { it.folio == cotizacion.folio }
+        saveList(quotes)
+    }
+
     fun getQuotes(): List<Cotizacion> {
         val file = File(context.filesDir, fileName)
         if (!file.exists()) return emptyList()

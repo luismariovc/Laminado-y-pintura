@@ -71,6 +71,20 @@
                         android:orientation="vertical"
                         android:gravity="end">
 
+
+
+                        <ImageView
+                            android:id="@+id/btnEliminar"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_delete"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#EF4444"
+                            android:contentDescription="Eliminar Cotización"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"/>
+
                         <TextView
                             android:id="@+id/tvFolio"
                             android:layout_width="wrap_content"
@@ -90,8 +104,8 @@
                             android:textSize="10sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="4dp"/>
-                    </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
 
                 <!-- Cliente y Vehículo -->
                 <LinearLayout
@@ -465,6 +479,8 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="12dp"
                 app:cornerRadius="8dp"/>
+
+
 
             <Button
                 android:id="@+id/btnVolver"

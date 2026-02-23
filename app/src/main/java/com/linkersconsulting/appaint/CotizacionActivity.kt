@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +41,7 @@ class CotizacionActivity : AppCompatActivity() {
     private lateinit var btnWhatsApp: MaterialButton
     private lateinit var btnEmail: MaterialButton
     private lateinit var btnImprimir: MaterialButton
+    private lateinit var btnEliminar: ImageView
     private lateinit var btnVolver: Button
 
     private lateinit var cotizacion: Cotizacion
@@ -88,6 +90,7 @@ class CotizacionActivity : AppCompatActivity() {
         btnWhatsApp = findViewById(R.id.btnWhatsApp)
         btnEmail = findViewById(R.id.btnEmail)
         btnImprimir = findViewById(R.id.btnImprimir)
+        btnEliminar = findViewById(R.id.btnEliminar)
         btnVolver = findViewById(R.id.btnVolver)
     }
 
@@ -138,6 +141,19 @@ class CotizacionActivity : AppCompatActivity() {
 
         btnImprimir.setOnClickListener {
             Toast.makeText(this, "Función de impresión en desarrollo", Toast.LENGTH_SHORT).show()
+        }
+
+        btnEliminar.setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Eliminar Cotización")
+                .setMessage("¿Estás seguro de que deseas eliminar esta cotización? Esta acción no se puede deshacer.")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    QuoteRepository(this).deleteQuote(cotizacion)
+                    Toast.makeText(this, "Cotización eliminada", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
 
         btnVolver.setOnClickListener {
