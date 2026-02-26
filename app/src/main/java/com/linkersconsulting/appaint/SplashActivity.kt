@@ -14,6 +14,9 @@ class SplashActivity : AppCompatActivity() {
         androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = android.graphics.Color.TRANSPARENT
         
+        // Inicializar AdMob (sin mostrar anuncios en splash)
+        AdManager.initialize(this)
+        
         setContentView(R.layout.activity_splash)
 
         val videoView = findViewById<VideoView>(R.id.vvSplashVideo)

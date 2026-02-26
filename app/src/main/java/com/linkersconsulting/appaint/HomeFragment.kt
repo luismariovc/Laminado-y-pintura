@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdView
 import com.google.firebase.auth.FirebaseAuth
 import com.linkersconsulting.appaint.databinding.FragmentHomeBinding
 
@@ -16,6 +17,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var quoteRepository: QuoteRepository
     private var allQuotes: List<Cotizacion> = emptyList()
+    private var adView: AdView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +35,26 @@ class HomeFragment : Fragment() {
         setupHeader()
         setupRecyclerView()
         setupSearch()
+        setupAd()
     }
 
     override fun onResume() {
         super.onResume()
         loadQuotes()
+        AdManager.resumeBanner(adView)
+    }
+
+    private fun setupAd() {
+        try {
+            adView = AdManager.injectBannerAd(binding.adContainer)
+        } catch (e: Exception) {
+            android.util.Log.e("HomeFragment", "Error setupAd: ${e.message}", e)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdManager.pauseBanner(adView)
     }
 
     private fun setupHeader() {
@@ -102,6 +119,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        AdManager.destroyBanner(adView)
         super.onDestroyView()
         _binding = null
     }

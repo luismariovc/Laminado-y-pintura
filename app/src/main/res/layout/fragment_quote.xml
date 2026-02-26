@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F5F5F5"
-    android:layout_marginBottom="60dp"> <!-- Space for BottomNav if overlaying, but usually not needed if organized nicely. Adding margin just in case of overlap constraint -->
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -1126,8 +1132,18 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/premium_red"
                 android:textColor="#FFFFFF"
-                app:cornerRadius="8dp"/>
+                app:cornerRadius="8dp"
+                android:layout_marginBottom="8dp"/>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+
+    <!-- Banner Ad fijo en la parte inferior -->
+    <FrameLayout
+        android:id="@+id/adContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>

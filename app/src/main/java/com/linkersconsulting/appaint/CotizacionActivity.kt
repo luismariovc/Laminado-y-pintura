@@ -4,14 +4,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdView
 import com.google.android.material.button.MaterialButton
 import java.io.Serializable
 
 class CotizacionActivity : AppCompatActivity() {
+
+    private var adView: AdView? = null
 
     private lateinit var tvFolio: TextView
     private lateinit var tvFecha: TextView
@@ -50,15 +54,41 @@ class CotizacionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cotizacion)
 
+        // Inicializar AdMob
+        AdManager.initialize(this)
+
         initViews()
         loadCotizacion()
         displayCotizacion()
         setupListeners()
+        setupAd()
         
         // Auto-Send Logic
         if (intent.getBooleanExtra("AUTO_SEND_WHATSAPP", false)) {
             enviarPorWhatsApp(cotizacion)
         }
+    }
+
+    private fun setupAd() {
+        val container = findViewById<FrameLayout>(R.id.adContainer)
+        if (container != null) {
+            adView = AdManager.injectBannerAd(container)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdManager.pauseBanner(adView)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AdManager.resumeBanner(adView)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AdManager.destroyBanner(adView)
     }
 
     private fun initViews() {

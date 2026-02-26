@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdView
 import com.google.firebase.auth.FirebaseAuth
 import com.linkersconsulting.appaint.databinding.FragmentProfileBinding
 import java.io.ByteArrayOutputStream
@@ -20,6 +21,7 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private var adView: AdView? = null
 
     // Image Picker
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -64,6 +66,25 @@ class ProfileFragment : Fragment() {
         setupUser()
         loadProfileImage()
         setupListeners()
+        setupAd()
+    }
+
+    private fun setupAd() {
+        try {
+            adView = AdManager.injectBannerAd(binding.adContainer)
+        } catch (e: Exception) {
+            android.util.Log.e("ProfileFragment", "Error setupAd: ${e.message}", e)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AdManager.resumeBanner(adView)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdManager.pauseBanner(adView)
     }
 
     private fun setupUser() {
@@ -138,6 +159,7 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        AdManager.destroyBanner(adView)
         super.onDestroyView()
         _binding = null
     }

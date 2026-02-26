@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.Spinner
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdView
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -76,6 +78,8 @@ class QuoteFragment : Fragment() {
     private val repuestoViews = mutableListOf<View>()
 
     private var base64Logo: String? = null
+    private var fragmentView: View? = null
+    private var adView: AdView? = null
 
     // Image Picker
     private val pickImage = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.GetContent()) { uri ->
@@ -139,7 +143,8 @@ class QuoteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_quote, container, false)
+        fragmentView = inflater.inflate(R.layout.fragment_quote, container, false)
+        return fragmentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -149,6 +154,7 @@ class QuoteFragment : Fragment() {
         loadSavedLogo(view)
         setupListeners(view)
         setupServicesGrid(view)
+        setupAd(view)
         
         // Restore dynamic rows or init defaults
         // For simplicity in this migration, just init defaults
@@ -156,6 +162,18 @@ class QuoteFragment : Fragment() {
         addPinturaRow()
         addRepuestoRow()
     }
+
+    private fun setupAd(view: View) {
+        try {
+            val container = view.findViewById<FrameLayout>(R.id.adContainer)
+            if (container != null) {
+                adView = AdManager.injectBannerAd(container)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("QuoteFragment", "Error al configurar anuncio: ${e.message}")
+        }
+    }
+
 
     private fun initViews(view: View) {
         // Perfil Taller
@@ -249,11 +267,22 @@ class QuoteFragment : Fragment() {
         if (::tvFolioHeader.isInitialized) {
              tvFolioHeader.text = "#$nextFolio"
         }
+        
+        AdManager.resumeBanner(adView)
     }
 
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(timeRunnable) // Stop updates to save battery
+        
+        AdManager.pauseBanner(adView)
+    }
+
+    override fun onDestroyView() {
+        AdManager.destroyBanner(adView)
+        adView = null
+        fragmentView = null
+        super.onDestroyView()
     }
 
     private fun updateHeaderData() {

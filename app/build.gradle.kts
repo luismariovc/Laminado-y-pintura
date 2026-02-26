@@ -81,4 +81,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // Google Mobile Ads SDK (AdMob) - Versión compatible con Firebase
+    implementation("com.google.android.gms:play-services-ads:23.6.0")
 }
