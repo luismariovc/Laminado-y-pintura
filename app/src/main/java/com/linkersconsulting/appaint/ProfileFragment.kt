@@ -11,9 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdView
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.firestore.FirebaseFirestore
 import com.linkersconsulting.appaint.databinding.FragmentProfileBinding
 import java.io.ByteArrayOutputStream
 
@@ -111,6 +115,155 @@ class ProfileFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
+        binding.btnDeleteAccount.setOnClickListener {
+            showDeleteAccountConfirmation()
+        }
+    }
+
+    private fun showDeleteAccountConfirmation() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Eliminar cuenta")
+            .setMessage(
+                "Se borrarán tus datos en el servidor y tu cuenta de acceso. " +
+                    "Esta acción no se puede deshacer."
+            )
+            .setPositiveButton("Eliminar") { _, _ -> deleteAccountFromBackend() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    /**
+     * Cumple políticas de Play Store: borrado en Firebase (Auth + datos asociados en Firestore si existen)
+     * y datos locales de perfil.
+     */
+    private fun deleteAccountFromBackend() {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(requireContext(), "No hay sesión activa", Toast.LENGTH_SHORT).show()
+            return
+        }
+        setAccountActionsEnabled(false)
+        deleteFirestoreUserProfile(user.uid) {
+            if (!isAdded) return@deleteFirestoreUserProfile
+            user.delete()
+                .addOnCompleteListener { task ->
+                    if (!isAdded) return@addOnCompleteListener
+                    setAccountActionsEnabled(true)
+                    if (task.isSuccessful) {
+                        onAccountDeletedSuccessfully()
+                    } else {
+                        val err = task.exception
+                        if (err is FirebaseAuthRecentLoginRequiredException) {
+                            promptReauthenticateAndDelete(user)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "No se pudo eliminar la cuenta: ${err?.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun deleteFirestoreUserProfile(uid: String, onFinished: () -> Unit) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(uid)
+            .delete()
+            .addOnCompleteListener {
+                if (!isAdded) return@addOnCompleteListener
+                onFinished()
+            }
+    }
+
+    private fun promptReauthenticateAndDelete(user: com.google.firebase.auth.FirebaseUser) {
+        val email = user.email
+        if (email.isNullOrBlank()) {
+            Toast.makeText(
+                requireContext(),
+                "No se puede verificar la cuenta. Inicia sesión de nuevo e inténtalo otra vez.",
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+        val input = android.widget.EditText(requireContext()).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            hint = "Contraseña"
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirma tu identidad")
+            .setMessage("Por seguridad, introduce tu contraseña para eliminar la cuenta.")
+            .setView(input)
+            .setPositiveButton("Eliminar") { _, _ ->
+                val password = input.text.toString()
+                if (password.isEmpty()) {
+                    Toast.makeText(requireContext(), "Introduce la contraseña", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                reauthenticateAndDelete(user, email, password)
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun reauthenticateAndDelete(
+        user: com.google.firebase.auth.FirebaseUser,
+        email: String,
+        password: String
+    ) {
+        setAccountActionsEnabled(false)
+        val credential = EmailAuthProvider.getCredential(email, password)
+        user.reauthenticate(credential)
+            .addOnCompleteListener { authTask ->
+                if (!isAdded) return@addOnCompleteListener
+                if (!authTask.isSuccessful) {
+                    setAccountActionsEnabled(true)
+                    Toast.makeText(
+                        requireContext(),
+                        "Contraseña incorrecta o sesión no válida",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@addOnCompleteListener
+                }
+                deleteFirestoreUserProfile(user.uid) {
+                    if (!isAdded) return@deleteFirestoreUserProfile
+                    user.delete()
+                        .addOnCompleteListener { delTask ->
+                            if (!isAdded) return@addOnCompleteListener
+                            setAccountActionsEnabled(true)
+                            if (delTask.isSuccessful) {
+                                onAccountDeletedSuccessfully()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No se pudo eliminar: ${delTask.exception?.message}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                }
+            }
+    }
+
+    private fun setAccountActionsEnabled(enabled: Boolean) {
+        binding.btnSignOut.isEnabled = enabled
+        binding.btnDeleteAccount.isEnabled = enabled
+    }
+
+    private fun onAccountDeletedSuccessfully() {
+        requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .apply()
+        FirebaseAuth.getInstance().signOut()
+        Toast.makeText(requireContext(), "Cuenta eliminada", Toast.LENGTH_SHORT).show()
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun saveProfileImage(bitmap: Bitmap) {
